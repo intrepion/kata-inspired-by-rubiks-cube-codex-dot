@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#182c2c"><title>Chromatic — a little cube, endless possibility</title><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"><script defer src="model.js"></script><script defer src="session.js"></script><script defer src="game.js"></script></head>
+<body>
+<header><a class="brand" href="./" aria-label="Chromatic home"><span class="brand-icon">◇</span> chromatic<span class="brand-period">.</span></a><span class="edition">THE PUZZLE ROOM <i></i> No. 04</span><button id="help" class="quiet">How to play <span>↗</span></button></header>
+<main>
+<section class="intro"><div><p class="eyebrow">SIX COLORS. ONE SMALL OBSESSION.</p><h1>Find your way<br>back to <em>harmony.</em></h1></div><p class="intro-note">A familiar puzzle. A fresh perspective.<br>Turn, explore, and bring every color home.</p></section>
+<div class="workspace">
+<section class="playground" aria-label="Interactive cube">
+ <div class="stage-top"><span class="pill"><i></i> 3 × 3 CLASSIC</span><button id="home-view" class="quiet small">↺ Reset view</button></div>
+ <div id="stage" tabindex="0" aria-label="3D cube. Drag to inspect. Use U R F D L B to turn faces. Shift reverses. Alt makes a double turn."><canvas id="cube" aria-label="Interactive 3D twisty cube"></canvas><div class="orbit-label">DRAG TO EXPLORE <span>↔</span></div></div>
+ <div class="stage-bottom"><div><span class="live-dot"></span><span id="status" role="status">Ready to explore</span></div><span id="queue">ALL SIDES, IN YOUR HANDS</span></div>
+</section>
+<aside class="console" aria-label="Puzzle controls">
+ <div class="console-title"><span class="eyebrow">YOUR SESSION</span><span id="mode-label">FREE PLAY</span></div>
+ <div class="stats"><div><span class="label">TIME</span><strong id="timer">00:00.0</strong></div><div><span class="label">TURNS</span><strong id="moves">0</strong></div></div>
+ <button id="scramble" class="primary"><span>New scramble</span><span>⤨</span></button>
+ <div class="secondary-actions"><button id="restart">↺ Restart scramble</button><button id="reset">Reset solved</button></div>
+ <div class="section-heading"><h2>Make a turn</h2><span>FACES STAY FIXED</span></div>
+ <div class="turn-mode" role="group" aria-label="Turn direction"><button data-mod="" aria-pressed="true">↻ <span>Clockwise</span></button><button data-mod="'" aria-pressed="false">↺ <span>Inverse</span></button><button data-mod="2" aria-pressed="false">2 <span>Double</span></button></div>
+ <div id="face-controls" class="face-controls"></div>
+ <p class="hint">Clockwise is viewed from outside that face.<br><kbd>Shift</kbd> + face = inverse · <kbd>Alt</kbd> + face = double</p>
+ <div class="section-heading"><h2>Move trail</h2><button id="undo" class="quiet small" disabled>↶ Undo <kbd>Z</kbd></button></div>
+ <div id="history" class="history" aria-label="Move history"><span class="empty">Every turn is a new possibility.</span></div>
+ <details id="scramble-details"><summary>Scramble notation <span>+</span></summary><p id="scramble-text">Start a scramble to begin a timed challenge.</p></details>
+</aside>
+</div>
+<section class="underneath"><div class="map-copy"><p class="eyebrow">A DIFFERENT PERSPECTIVE</p><h2>The whole picture.</h2><p>Your cube, unfolded. Center letters name each face<br>and stay the same as you rotate your view.</p><label><input id="letters" type="checkbox" checked> Show sticker letters</label></div><div id="net" class="net" aria-label="Unfolded cube map"></div><div class="small-note"><span>01 / INSPECT</span><p>Drag the cube or use the arrow keys.</p><span>02 / TURN</span><p>Use the face buttons or letter keys.</p><span>03 / RESTORE</span><p>Match all nine stickers on every face.</p></div></section>
+<footer><span>Made for a moment of focus.</span><span>CHROMATIC · AN ORIGINAL TWISTY PUZZLE</span></footer>
+</main>
+<dialog id="help-dialog"><button id="close-help" class="dialog-close" aria-label="Close instructions">×</button><p class="eyebrow">WELCOME TO THE PUZZLE ROOM</p><h2>A little orientation.</h2><p>Restore all six faces to a single color. Each face turns a real outer layer of the cube, including the neighboring stickers.</p><dl><dt>Explore</dt><dd>Drag with a mouse or finger. Arrow keys orbit; Home restores the starting view.</dd><dt>Turn</dt><dd>U up, R right, F front, D down, L left, B back. Letters on the centers identify the fixed faces, even after orbiting.</dd><dt>Change direction</dt><dd>A plain letter turns clockwise, viewed directly at that face. Hold Shift for inverse (R′), or Alt for a double turn (R2). The direction selector also applies to letter keys.</dd><dt>Recover</dt><dd>Z undoes the latest turn. Fast taps queue in order. Restart returns to the same scramble; Reset solved gives a clean cube.</dd><dt>Challenge</dt><dd>New scramble applies 25 legal random turns. Inspect freely: the timer starts with your first turn and stops on completion. Undo marks an assisted session.</dd></dl><p class="hint">This is a practice room, with random-move scrambles rather than official competition random-state scrambles. No automatic solver is included. Sessions clear on page reload.</p><button id="play" class="primary">Let’s turn something <span>→</span></button></dialog>
+</body></html>

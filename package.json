@@ -1,0 +1,5 @@
+{
+  "name": "chromatic-cube", "version": "1.0.0", "private": true,
+  "scripts": {"test":"node --test tests/model.test.cjs tests/session.test.cjs", "check":"node --check model.js && node --check session.js && node --check game.js && node --check tests/browser.cjs", "start":"python3 server.py", "test:browser":"node tests/browser.cjs"},
+  "devDependencies": {"playwright":"1.58.2"}
+}
