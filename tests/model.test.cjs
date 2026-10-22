@@ -32,3 +32,7 @@ test('impossible single edge flip, corner twist, corner reflection and odd permu
  s=C.solved();const a=s.find(c=>c.id==='1,1,0'),b=s.find(c=>c.id==='-1,1,0');[a.p,b.p]=[b.p,a.p];a.stickers.find(s=>s.face==='R').n=[-1,0,0];b.stickers.find(s=>s.face==='L').n=[1,0,0];assert.ok(!C.legality(s));
 });
 test('malformed moves reject without mutating input',()=>{const s=C.solved(),before=serial(s);for(const m of ['X','R3','r','R22',''])assert.throws(()=>C.turn(s,m));assert.equal(serial(s),before);});
+test('all six clockwise corner permutations and twists match published CubeDefs',()=>{
+ const fixtures={U:[[3,0,1,2,4,5,6,7],[0,0,0,0,0,0,0,0]],D:[[0,1,2,3,5,6,7,4],[0,0,0,0,0,0,0,0]],L:[[0,2,6,3,4,1,5,7],[0,1,2,0,0,2,1,0]],B:[[0,1,3,7,4,5,2,6],[0,0,1,2,0,0,2,1]]};
+ for(const [f,[permutation,orientation]] of Object.entries(fixtures)){const result=C.coordinates(C.turn(C.solved(),f),C.CORNERS);assert.deepEqual(result.map(x=>x.index),permutation);assert.deepEqual(result.map(x=>x.orientation),orientation);}
+});

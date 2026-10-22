@@ -3,7 +3,7 @@
 (()=>{
  const C=window.Cube, session=new window.CubeSession();
  const $=id=>document.getElementById(id), canvas=$('cube'), ctx=canvas.getContext('2d');
- const defaultView={yaw:-.57,pitch:.48};let view={...defaultView},mod='',letters=true,drag=null,polygons=[],lastUI='';
+ const defaultView={yaw:-.57,pitch:.48};let view={...defaultView},mod='',letters=true,drag=null,polygons=[],lastUI='',renderBounds=null,lastDrawing=null;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');session.duration=reduced.matches?1:180;
  reduced.addEventListener('change',()=>session.duration=reduced.matches?1:180);
  for(const [face,f] of Object.entries(C.FACES)){
@@ -16,6 +16,7 @@
   const el=document.createElement('div');el.className='net-face';el.id='net-'+face;el.style.gridColumn=at[0];el.style.gridRow=at[1];el.setAttribute('aria-label',C.FACES[face].name);
   for(let i=0;i<9;i++){const s=document.createElement('span');if(i===4)s.className='center';el.append(s);}$('net').append(el);
  }
+ const turnModifier=e=>e.altKey?'2':e.shiftKey?"'":mod;
  function request(move){if(!session.enqueue(move)){$('status').textContent='Turn queue full — let it catch up.';}updateUI(performance.now());}
  document.querySelectorAll('[data-mod]').forEach(b=>b.addEventListener('click',()=>{
   mod=b.dataset.mod;document.querySelectorAll('[data-mod]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
@@ -32,8 +33,8 @@
  $('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeHelp();}});
  document.addEventListener('keydown',e=>{
   if($('help-dialog').open||e.ctrlKey||e.metaKey||/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName))return;
-  const f=e.key.toUpperCase();
-  if(Object.hasOwn(C.FACES,f)){e.preventDefault();if(!e.repeat)request(f+(e.altKey?'2':e.shiftKey?"'":mod));return;}
+  const f=(e.altKey&&/^Key[URFDLB]$/.test(e.code)?e.code.slice(3):e.key).toUpperCase();
+  if(Object.hasOwn(C.FACES,f)){e.preventDefault();if(!e.repeat)request(f+turnModifier(e));return;}
   if(f==='Z'){e.preventDefault();if(!e.repeat)session.undo();return;}
   if(e.key==='Home'){e.preventDefault();view={...defaultView};}
   const arrows={ArrowLeft:[-.12,0],ArrowRight:[.12,0],ArrowUp:[0,.12],ArrowDown:[0,-.12]};
@@ -44,9 +45,12 @@
  const add=(a,b)=>a.map((x,i)=>x+b[i]);const mul=(v,n)=>v.map(x=>x*n);
  function draw(now){
   const rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=Math.min(devicePixelRatio||1,2);
+  const drawingKey=[w,h,dpr,view.yaw,view.pitch,letters].join('|');
+  if(!session.active&&lastDrawing?.state===session.state&&lastDrawing.key===drawingKey)return;
+  lastDrawing=session.active?null:{state:session.state,key:drawingKey};
   if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-  const scale=Math.min(w*.205,h*.205), center=[w/2,h*.43];
+  const scale=Math.min(w*.18,h*.17), center=[w/2,h*.46];
   const project=v=>{const p=camera(v);return [center[0]+p[0]*scale,center[1]-p[1]*scale,p[2]];};
   const gradient=ctx.createRadialGradient(w*.5,h*.85,1,w*.5,h*.85,scale*1.7);gradient.addColorStop(0,'#284a3930');gradient.addColorStop(1,'#284a3900');ctx.fillStyle=gradient;ctx.beginPath();ctx.ellipse(w*.5,h*.85,scale*1.7,scale*.32,0,0,Math.PI*2);ctx.fill();
   polygons=[];const faces=[];
@@ -65,6 +69,7 @@
    }
   }
   faces.sort((a,b)=>a.depth-b.depth);
+  const outline=faces.flatMap(f=>f.points);renderBounds={left:Math.min(...outline.map(p=>p[0])),right:Math.max(...outline.map(p=>p[0])),top:Math.min(...outline.map(p=>p[1])),bottom:Math.max(...outline.map(p=>p[1])),width:w,height:h};
   const path=points=>{ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();};
   for(const f of faces){
    path(f.points);ctx.fillStyle='#20312e';ctx.fill();ctx.strokeStyle='#142923';ctx.lineWidth=1;ctx.lineJoin='round';ctx.stroke();
@@ -80,11 +85,11 @@
  $('stage').addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>5)drag.moved=true;if(drag.moved){view.yaw+=dx*.008;view.pitch=Math.max(-1.4,Math.min(1.4,view.pitch+dy*.008));}drag.x=e.clientX;drag.y=e.clientY;});
  $('stage').addEventListener('pointerup',e=>{
   if(!drag||drag.id!==e.pointerId)return;const tap=!drag.moved;drag=null;
-  if(tap&&!session.active&&!session.queue.length){const r=canvas.getBoundingClientRect();const hit=[...polygons].reverse().find(p=>inside(e.clientX-r.left,e.clientY-r.top,p.inset));if(hit)request(hit.face+(e.altKey?'2':e.shiftKey?"'":mod));}
+  if(tap){const r=canvas.getBoundingClientRect();const hit=[...polygons].reverse().find(p=>inside(e.clientX-r.left,e.clientY-r.top,p.inset));if(hit)request(hit.face+turnModifier(e));}
  });
  $('stage').addEventListener('pointercancel',()=>drag=null);$('stage').addEventListener('lostpointercapture',()=>drag=null);
  function updateUI(now){
-  const elapsed=session.elapsed(now),tenths=Math.floor(elapsed/100);$('timer').textContent=`${String(Math.floor(tenths/600)).padStart(2,'0')}:${String(Math.floor(tenths/10)%60).padStart(2,'0')}.${tenths%10}`;
+  const elapsed=session.elapsed(now),tenths=Math.floor(elapsed/100),timeText=`${String(Math.floor(tenths/600)).padStart(2,'0')}:${String(Math.floor(tenths/10)%60).padStart(2,'0')}.${tenths%10}`;if($('timer').textContent!==timeText)$('timer').textContent=timeText;
   const key=[session.moves,session.history.join(','),session.active?.move,session.queue.length,session.scramble.join(','),session.complete,letters,session.assisted].join('|');if(key===lastUI)return;lastUI=key;
   $('moves').textContent=session.moves;
   $('status').textContent=session.complete?'Harmony restored. Beautifully done.':session.active?`Turning ${session.active.move.replace("'",'′')}…`:session.started!==null?'Find your next turn.':session.scramble.length?'Scrambled. Your first turn starts the clock.':'Ready to explore';
@@ -98,5 +103,5 @@
  }
  function frame(now){session.tick(now);draw(now);updateUI(now);requestAnimationFrame(frame);}requestAnimationFrame(frame);
  // Read-only diagnostic snapshot, used by acceptance tests; no game-state mutation API.
- window.chromatic=Object.freeze({snapshot:()=>({faces:C.facelets(session.state),legal:C.legality(session.state),solved:C.isSolved(session.state),active:session.active?.move??null,queued:session.queue.length,history:[...session.history],moves:session.moves,complete:session.complete,elapsed:session.elapsed(performance.now()),scramble:[...session.scramble],view:{...view}})});
+ window.chromatic=Object.freeze({snapshot:()=>({faces:C.facelets(session.state),legal:C.legality(session.state),solved:C.isSolved(session.state),active:session.active?.move??null,queued:session.queue.length,history:[...session.history],moves:session.moves,complete:session.complete,elapsed:session.elapsed(performance.now()),scramble:[...session.scramble],view:{...view},bounds:renderBounds?{...renderBounds}:null})});
 })();
