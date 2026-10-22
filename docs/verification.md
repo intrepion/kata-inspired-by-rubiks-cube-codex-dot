@@ -26,6 +26,6 @@ A screenshot review also led to making the canvas absolutely positioned inside i
 
 The detached loopback preview is http://127.0.0.1:55605, served by `server.py` from the durable project directory. PID recorded in `/tmp/chromatic-preview.pid`; log in `/tmp/chromatic-preview.log`. Other game listeners on 55602, 55603 and 55604 were verified preserved.
 
-GitHub Actions runs the same checks using Playwright Chromium on Ubuntu. Consult the repository Actions tab for the current exact-commit result. No hosted deployment is configured.
+GitHub Actions runs the same checks using Playwright Chromium on Ubuntu 24.04. The first run passed syntax and model/session tests but could not install Chromium on the moving ubuntu-latest (26.04) runner; the workflow now pins the Playwright-supported 24.04 runner. Consult the repository Actions tab for the current exact-commit result. No hosted deployment is configured.
 
 This is randomized legal-move practice, not a competition random-state scrambler. No automatic solver is implemented. Physical phones, Safari, Firefox and long-duration human solving sessions were not tested. Reload intentionally starts fresh.
