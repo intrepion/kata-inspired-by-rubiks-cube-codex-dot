@@ -1,5 +1,9 @@
 # Chromatic
 
+## Play online
+
+[Play Chromatic](https://intrepion.github.io/kata-inspired-by-rubiks-cube-codex-dot/) — free, playable in your browser.
+
 A quiet little room for a very twisty puzzle. An original, playable 3×3 cube game inspired by the classic six-color puzzle, with an animated 3D cube, an unfolded live map, and a warm editorial presentation.
 
 ## Play locally
