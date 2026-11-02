@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "workflowCommit": "53e91ba1cd67d27ac97fceb1efbbc6f2b0ccea52",
+  "sourceCommit": "d6a1cd2b68d2a10f4be4cfe71910d6f2abdb099a",
+  "runId": "41392347723",
+  "url": "http://127.0.0.1:4192/",
+  "inputs": {
+    "index.html": "ee9706cd29a9e9b59ea0ca8edf8c8f51ee678a928758bc512f400ad320a5d9da",
+    "styles.css": "38001e3e35283b1cf776d94ca9ced09dd510f3c0286e6b559d6b3be142f01b1b",
+    "game.js": "1524738ea4bbf5103b957e5e46a61b88177c172742f3a9b65ac17cead9a42c24",
+    "model.js": "c6cce99f6d48a1f3eee015c7d988262fb2397b59a1fe990e747c82227f66f4f0",
+    "session.js": "17ac62ca034576fb022eba225bbb3017dc20bc0ca65f121ce61a1ef5606ea600",
+    "icon.svg": "b11a3e2434e628a4019fd3c7c63301262950f2258bfe2e02536ce0aa57634831"
+  },
+  "browser": "153.0.8010.12",
+  "viewport": {
+    "width": 1280,
+    "height": 1000
+  },
+  "screenshots": [
+    "chromatic-01.png",
+    "chromatic-02.png"
+  ]
+}

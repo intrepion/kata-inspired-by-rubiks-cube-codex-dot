@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gameId": "kata-inspired-by-rubiks-cube-codex-dot",
   "playUrl": "https://intrepion.github.io/kata-inspired-by-rubiks-cube-codex-dot/",
   "screenshots": [
@@ -12,6 +12,52 @@
         "sourcePath": "docs/screenshots/desktop.png",
         "deployedBuild": null,
         "captureDate": null
+      }
+    },
+    {
+      "path": "arcade/screenshots/ci-20261102-01.jpg",
+      "sha256": "bf4b20b7397b678e69ea2b75d97718e2c9e05d7cd1a11d1015030d62e871fd25",
+      "alt": "Chromatic gameplay, view 1",
+      "provenance": {
+        "kind": "ci_gameplay_capture",
+        "sourcePath": "arcade/capture-evidence/ci-20261102-01.png",
+        "sourceSha256": "dfb6e6336354c9c91457fc461a03d6b0ed0fd084985c816f42fdccd10f0904bc",
+        "captureCommit": "d6a1cd2b68d2a10f4be4cfe71910d6f2abdb099a",
+        "workflowRunId": "41392347723",
+        "inputHashes": {
+          "index.html": "ee9706cd29a9e9b59ea0ca8edf8c8f51ee678a928758bc512f400ad320a5d9da",
+          "styles.css": "38001e3e35283b1cf776d94ca9ced09dd510f3c0286e6b559d6b3be142f01b1b",
+          "game.js": "1524738ea4bbf5103b957e5e46a61b88177c172742f3a9b65ac17cead9a42c24",
+          "model.js": "c6cce99f6d48a1f3eee015c7d988262fb2397b59a1fe990e747c82227f66f4f0",
+          "session.js": "17ac62ca034576fb022eba225bbb3017dc20bc0ca65f121ce61a1ef5606ea600",
+          "icon.svg": "b11a3e2434e628a4019fd3c7c63301262950f2258bfe2e02536ce0aa57634831"
+        },
+        "publishedFilesVerifiedAt": "2026-11-02T19:01:20Z",
+        "captureRecordPath": "arcade/capture-evidence/ci-20261102-record.json",
+        "captureRecordSha256": "42f9b2d4b74bbbbc423633bb730295981dfee574df14b0e3c564b96ce833ac83"
+      }
+    },
+    {
+      "path": "arcade/screenshots/ci-20261102-02.jpg",
+      "sha256": "cfcb7d3aa3ef9af63bfecd4e9287225131c980ed418af21912197ee237c87c01",
+      "alt": "Chromatic gameplay, view 2",
+      "provenance": {
+        "kind": "ci_gameplay_capture",
+        "sourcePath": "arcade/capture-evidence/ci-20261102-02.png",
+        "sourceSha256": "ea9fefec63e82e7942981e1505f6401a134bac5df1cb84c8004e2617ee4660ab",
+        "captureCommit": "d6a1cd2b68d2a10f4be4cfe71910d6f2abdb099a",
+        "workflowRunId": "41392347723",
+        "inputHashes": {
+          "index.html": "ee9706cd29a9e9b59ea0ca8edf8c8f51ee678a928758bc512f400ad320a5d9da",
+          "styles.css": "38001e3e35283b1cf776d94ca9ced09dd510f3c0286e6b559d6b3be142f01b1b",
+          "game.js": "1524738ea4bbf5103b957e5e46a61b88177c172742f3a9b65ac17cead9a42c24",
+          "model.js": "c6cce99f6d48a1f3eee015c7d988262fb2397b59a1fe990e747c82227f66f4f0",
+          "session.js": "17ac62ca034576fb022eba225bbb3017dc20bc0ca65f121ce61a1ef5606ea600",
+          "icon.svg": "b11a3e2434e628a4019fd3c7c63301262950f2258bfe2e02536ce0aa57634831"
+        },
+        "publishedFilesVerifiedAt": "2026-11-02T19:01:20Z",
+        "captureRecordPath": "arcade/capture-evidence/ci-20261102-record.json",
+        "captureRecordSha256": "42f9b2d4b74bbbbc423633bb730295981dfee574df14b0e3c564b96ce833ac83"
       }
     }
   ]
