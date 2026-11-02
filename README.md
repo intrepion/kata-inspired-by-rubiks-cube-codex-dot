@@ -68,3 +68,7 @@ Move notation follows [WCA Regulations, Article 12](https://www.worldcubeassocia
 MIT © 2026 intrepion. Original game presentation and source. Unaffiliated with Rubik’s or the World Cube Association.
 
 The complete official [GitHub global ignore templates](https://github.com/github/gitignore/tree/main/Global) are preserved verbatim in `gitignore-templates/Linux.gitignore`, `Windows.gitignore`, and `macOS.gitignore`, and combined with project-specific entries in `.gitignore`.
+
+## Arcade metadata
+
+See [docs/arcade-metadata.md](docs/arcade-metadata.md) for the game-owned manifest and screenshot provenance.
